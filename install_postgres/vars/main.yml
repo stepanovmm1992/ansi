@@ -1,0 +1,7 @@
+---
+packages:
+- postgresql
+- postgresql-contrib
+- python-psycopg2
+- python3-psycopg2
+# vars file for install_postgres

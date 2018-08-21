@@ -1,0 +1,12 @@
+---
+- hosts: vm #     hosts: vm[1:] vm[0]
+  gather_facts: False
+  become: True
+  user: max
+  
+  roles:
+    - install_python
+    - add_rsa_key
+    - install_postgres
+    
+

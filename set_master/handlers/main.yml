@@ -1,0 +1,3 @@
+---
+- name: restart postgres after configure as master
+  service: name=postgresql state=restarted

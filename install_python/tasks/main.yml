@@ -1,0 +1,5 @@
+---
+- name: Check if user exists
+  raw: test -e /usr/bin/python || (sudo apt -qy update && apt install -y python-minimal python-simplejson)
+  ignore_errors: true
+# tasks file for install_python

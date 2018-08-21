@@ -1,0 +1,5 @@
+---
+- name: add ssh-key to host
+  hosts: vm
+   
+
