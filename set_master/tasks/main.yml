@@ -1,2 +1,21 @@
 ---
+- name: copy config to master node
+  copy: src={{ item.src }} dest={{ item.dest }} force=yes
+  with_items: 
+    - {src: 'locale' ,dest: '/etc/default/locale'}
+    - {src: 'postgresql.conf',dest: '/etc/postgresql/10/main/postgresql.conf'}
+
+- name: change pg_hba
+  template:
+    force: true
+    src: 'pg_hba.conf.j2' 
+    dest: '/etc/postgresql/10/main/pg_hba.conf'
+
+- name: create replication user3
+  raw: sudo -upostgres psql -c "CREATE ROLE replication WITH REPLICATION PASSWORD '' LOGIN;"
+  ignore_errors: true
+
+- name: restart master postgresql
+  service: name=postgresql state=restarted
+
 # tasks file for set_master

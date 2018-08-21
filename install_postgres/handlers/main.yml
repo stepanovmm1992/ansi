@@ -1,4 +1,4 @@
 ---
-- name: restart nginx restart
+- name: restart postgres after install
   service: name=postgresql state=restarted
 # handlers file for install_postgres

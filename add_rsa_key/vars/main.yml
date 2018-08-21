@@ -1,3 +1,4 @@
 ---
 user: max
+path_to_rsa: '~/.ssh/id_rsa.pub'
 # vars file for add_rsa_key

@@ -1,2 +1,28 @@
 ---
-# tasks file for set_follower
+- name: stop postgres before configure as follower
+  service: name=postgresql state=stopped
+
+- name: copy follower config
+  copy: src={{ item.src }} dest={{ item.dest }} force=yes
+  with_items: 
+    - {src: 'locale' ,dest: '/etc/default/locale'}
+    - {src: 'postgresql.conf',dest: '/etc/postgresql/10/main/postgresql.conf'}
+
+- name: delete old base and data 
+  shell: rm -rf /var/lib/postgresql/10/main/*  
+ 
+- name: replicate base
+  raw: su postgres -c "pg_basebackup -h {{ groups['vm2'][0] }} -D /var/lib/postgresql/10/main/ -R -P -U replication -X stream"
+
+
+- name: change trigger down master
+  template:
+    force: true
+    src: recovery.conf.j2
+    dest: /var/lib/postgresql/10/main/recovery.conf
+
+- name: start postgres after configure as follower
+  service: name=postgresql state=started
+
+#- name: replication status
+#  raw: sudo -upostgres psql -c "SELECT pg_start_backup('stream');"
