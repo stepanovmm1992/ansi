@@ -2,7 +2,6 @@
 - hosts: vm2[0] 
   gather_facts: False
   become: True
-  user: max
 
   roles:
     - install_python

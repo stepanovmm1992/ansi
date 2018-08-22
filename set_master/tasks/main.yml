@@ -16,6 +16,7 @@
   ignore_errors: true
 
 - name: restart master postgresql
-  service: name=postgresql state=restarted
+  command: service postgresql restart
+
 
 # tasks file for set_master

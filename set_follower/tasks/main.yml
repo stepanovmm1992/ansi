@@ -1,6 +1,6 @@
 ---
 - name: stop postgres before configure as follower
-  service: name=postgresql state=stopped
+  command: service postgresql stop
 
 - name: copy follower config
   copy: src={{ item.src }} dest={{ item.dest }} force=yes
@@ -22,7 +22,7 @@
     dest: /var/lib/postgresql/10/main/recovery.conf
 
 - name: start postgres after configure as follower
-  service: name=postgresql state=started
+  command: service postgresql start
 
 #- name: replication status
 #  raw: sudo -upostgres psql -c "SELECT pg_start_backup('stream');"
